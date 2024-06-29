@@ -1,0 +1,22 @@
+version: "3.1"
+
+services:
+
+  redis:
+    image: redis:5.0.4
+    volumes:
+      - ./data:/data
+    ports:
+      - 6379:6379
+    command: redis-server
+    restart: always
+
+  phpredisadmin:
+    image: erikdubbelboer/phpredisadmin:v1.13.0
+    environment:
+      - REDIS_1_HOST=redis
+      - REDIS_1_PORT=6379
+    ports:
+      - 10021:80
+    depends_on:
+      - redis
